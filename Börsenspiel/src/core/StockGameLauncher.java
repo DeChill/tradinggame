@@ -1,4 +1,5 @@
 package core;
+import Scanner.StockGameCommandProcessor;
 import view.StockPriceViewer;
 
 
@@ -14,9 +15,10 @@ public class StockGameLauncher {
 		UpdateTimer updateTimer = UpdateTimer.getInstance();
 		stockPriceProvider.startUpdate();
 		stockPriceViewer.startUpdate(stockPriceProvider);
-		
+		StockGameCommandProcessor processor = new StockGameCommandProcessor(acc);
+		processor.process();
         
-        
+     /*   
         acc.addPlayer("Timo", 10000000);
         acc.buyShares("Timo", "BMW", 50);
         acc.buyShares("Timo", "Audi", 50);
