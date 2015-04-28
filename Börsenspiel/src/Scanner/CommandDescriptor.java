@@ -2,14 +2,23 @@ package Scanner;
 
 public class CommandDescriptor {
 
+	private Object [] params;
+	private CommandTypeInfo commandType;
+	
 	public Object[] getParams() {
-		// TODO Auto-generated method stub
-		return null;
+		return params;
 	}
 
-	public StockGameCommandType getCommandType() {
-		// TODO Auto-generated method stub
-		return null;
+	public CommandTypeInfo getCommandType() {
+		return commandType;
+	}
+	
+	public void setParams( Object [] params) {
+		this.params = params;
+	}
+	
+	public void setCommandTypeInfo (CommandTypeInfo commandType) {
+		this.commandType = commandType;
 	}
 
 }
