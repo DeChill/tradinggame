@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import Exceptions.ParamErrorException;
 import core.AccountManager;
 
 public class StockGameCommandProcessor {
 
-	private BufferedReader shellReader = new BufferedReader(
-			new InputStreamReader(System.in));
+	private BufferedReader shellReader = new BufferedReader(new InputStreamReader(System.in));
 	private PrintWriter shellWriter = new PrintWriter(System.out);
 	private AccountManager accountManager;
 
@@ -24,6 +24,15 @@ public class StockGameCommandProcessor {
 
 		while (true) { // the loop over all commands with one input line for
 						// every command
+			
+			try{
+			commandScanner.readCommand();
+			}catch (ParamErrorException e){
+				System.out.println("Fehler bei der eingabe. Bitte erneut versuchen!");
+				
+				// ZURÜCK IN DIE SCHLEIFE!!!!!!
+				break;
+			}
 
 			CommandDescriptor commandDescriptor = new CommandDescriptor();
 
@@ -40,27 +49,23 @@ public class StockGameCommandProcessor {
 				return;
 			}
 			case HELP: {
-				System.out.println(commandType.getHelpText());
+				for (int i = 0; i < StockGameCommandType.values().length; i++) {
+					System.out.println(StockGameCommandType.values()[i].getName() + StockGameCommandType.values()[i].getHelpText());
+				}
+				
 				break;
 			}
 			case CREATEPLAYER: {
-				String s = ""; 
-				try {
-				s = shellReader.readLine();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}	
-				accountManager.addPlayer(s, 20000000);
+				accountManager.addPlayer((String) commandDescriptor.getParams()[0], 50000);
 				break;
 			}
+			
 			case BUYSHARE: {
-				accountManager.buyShares((String) params[0],
-						(String) params[1], (int) params[2]);
+				accountManager.buyShares((String)params[0], (String)params[1], (int)params[2]);
 				break;
 			}
 			case SELLSHARE: {
-				accountManager.sellShares((String) params[0],
-						(String) params[1], (int) params[2]);
+				accountManager.sellShares((String)params[0], (String)params[1], (int)params[2]);
 				break;
 			}
 			default: break;
@@ -68,24 +73,24 @@ public class StockGameCommandProcessor {
 		}
 	}
 
-	private void help() {
-
-	}
-
-	private void exit() {
-
-	}
-
-	private void createPlayer() {
-
-	}
-
-	private void buyShare() {
-
-	}
-
-	private void sellShare() {
-
-	}
+//	private void help() {
+//
+//	}
+//
+//	private void exit() {
+//
+//	}
+//
+//	private void createPlayer() {
+//
+//	}
+//
+//	private void buyShare() {
+//
+//	}
+//
+//	private void sellShare() {
+//
+//	}
 
 }

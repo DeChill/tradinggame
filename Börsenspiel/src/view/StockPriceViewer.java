@@ -1,4 +1,5 @@
 package view;
+
 import java.util.Locale;
 import java.util.TimerTask;
 import java.util.Timer;
@@ -15,17 +16,16 @@ import core.StockPriceInfo;
 import core.UpdateTimer;
 
 public class StockPriceViewer extends JFrame {
-	
+
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
-	
-	
+
 	public void startUpdate(StockPriceInfo info) {
-	updateTimer.timer.scheduleAtFixedRate(new TimerTask() {
+		updateTimer.timer.scheduleAtFixedRate(new TimerTask() {
 
 			public void run() {
 				update(info);
 			}
-			
+
 		}, 2000, 1000);
 	}
 
@@ -62,8 +62,10 @@ public class StockPriceViewer extends JFrame {
 					"<tr><td align='right'>%s</td><td></td><td>%s</td></tr>",
 					shareSnapShot[i].getName(), s));
 		}
+
 		buff.append("</table></html>");
+
 		Label.setText(buff.toString());
 	}
-	
+
 }
