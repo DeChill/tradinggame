@@ -4,6 +4,7 @@ import Exceptions.NoShareFoundException;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
 import Exceptions.PlayerNameAlreadyExistsException;
+import Exceptions.PlayerNotFoundException;
 
 public class AccountManagerImpl implements AccountManager {
 
@@ -32,14 +33,27 @@ public class AccountManagerImpl implements AccountManager {
 				return players[i];
 			}
 		}
-		return null;
+		throw new PlayerNotFoundException();
+
+	}
+
+	private void testForPlayer(String name) {
+		try {
+			getPlayer(name);
+			throw new PlayerNameAlreadyExistsException();
+
+		} catch (PlayerNotFoundException e) {
+
+		}
+
 	}
 
 	@Override
 	public void addPlayer(String name, long money) {
+
 		try {
-			if (getPlayer(name) != null)
-				throw new PlayerNameAlreadyExistsException();
+			testForPlayer(name);
+
 			Player player = new Player(name, money);
 			addPlayerToArray(player);
 		} catch (PlayerNameAlreadyExistsException e) {
@@ -50,7 +64,7 @@ public class AccountManagerImpl implements AccountManager {
 	@Override
 	public void buyShares(String playerName, String shareName, int amount) {
 		try {
-			
+
 			getPlayer(playerName).buyPlayerShares(
 					stockPriceProvider.getShare(shareName), amount);
 
@@ -58,6 +72,8 @@ public class AccountManagerImpl implements AccountManager {
 			System.out.println("Not enough money for that transaction");
 		} catch (NoShareFoundException e) {
 			System.out.println("No share with that name was found!");
+		} catch (PlayerNotFoundException e){
+			System.out.println("Fehler bei der Eingabe!");
 		}
 
 	}
@@ -81,7 +97,7 @@ public class AccountManagerImpl implements AccountManager {
 
 	@Override
 	public long getPlayerValue(String name) {
-		return (getPlayer(name).getPlayerCash().getValue() + getPlayer(name).getPlayerShares()
-				.getValue());
+		return (getPlayer(name).getPlayerCash().getValue() + getPlayer(name)
+				.getPlayerShares().getValue());
 	}
 }

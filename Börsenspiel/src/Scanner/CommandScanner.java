@@ -26,7 +26,7 @@ public class CommandScanner {
 
 	}
 
-	public void readCommand() {
+	public void readCommand() throws ArrayIndexOutOfBoundsException {
 		String s = "";
 		try {
 			s = shellReader.readLine();
