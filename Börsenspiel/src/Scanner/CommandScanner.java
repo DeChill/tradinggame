@@ -44,17 +44,14 @@ public class CommandScanner {
 				params = new Object[command.getParamTypes().length];
 				for (int i = 0; i < params.length; i++) {
 					if (command.getParamTypes()[i] == String.class) {
-						params[i] = sarr[i+1];
+						params[i] = sarr[i + 1];
 					} else if (command.getParamTypes()[i] == int.class) {
-						if (Integer.parseInt(sarr[i+1]) <= 0 ){ 
-							throw new ParamErrorException() ;
+						if (Integer.parseInt(sarr[i + 1]) <= 0) {
+							throw new ParamErrorException();
 						}
-						params[i] = Integer.parseInt(sarr[i+1]);
+						params[i] = Integer.parseInt(sarr[i + 1]);
 					}
 
-				}
-				for (int j = 0; j < params.length; j++) {
-					System.out.println(params[j]);
 				}
 
 			}

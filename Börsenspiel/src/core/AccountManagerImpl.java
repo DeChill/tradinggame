@@ -3,6 +3,7 @@ package core;
 import Exceptions.NoShareFoundException;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
+import Exceptions.ParamErrorException;
 import Exceptions.PlayerNameAlreadyExistsException;
 import Exceptions.PlayerNotFoundException;
 
@@ -49,12 +50,15 @@ public class AccountManagerImpl implements AccountManager {
 	}
 
 	@Override
-	public void addPlayer(String name, long money) {
+	public void addPlayer(String name) {
 
 		try {
 			testForPlayer(name);
+			if (name.length() >= 16 || (!name.matches("[a-zA-Z1-9]*"))) {
+				throw new ParamErrorException();
+			}
 
-			Player player = new Player(name, money);
+			Player player = new Player(name, 500000);
 			addPlayerToArray(player);
 		} catch (PlayerNameAlreadyExistsException e) {
 			System.out.println("Player already exists!");
@@ -72,7 +76,7 @@ public class AccountManagerImpl implements AccountManager {
 			System.out.println("Not enough money for that transaction");
 		} catch (NoShareFoundException e) {
 			System.out.println("No share with that name was found!");
-		} catch (PlayerNotFoundException e){
+		} catch (PlayerNotFoundException e) {
 			System.out.println("Fehler bei der Eingabe!");
 		}
 

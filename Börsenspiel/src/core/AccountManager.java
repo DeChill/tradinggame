@@ -14,7 +14,7 @@ public interface AccountManager {
 	 * 
 	 * 
 	 */
-	void addPlayer(String name, long money);
+	void addPlayer(String name);
 	void buyShares(String playerName, String shareName, int amount);
 	void sellShares(String playerName, String shareName, int amount);
 	long getValue(Asset asset);
