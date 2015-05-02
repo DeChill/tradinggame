@@ -116,7 +116,7 @@ public class StockGameCommandProcessor {
 						commandType.getMethodName(),
 						commandType.getParamTypes());
 				Object s = method.invoke(accountManager, params);
-				if (s != null)
+//				if (s != null)
 					System.out.println(s);
 			} catch (NullPointerException e) {
 				e.printStackTrace();

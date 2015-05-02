@@ -35,7 +35,7 @@ public class Share {
 	}
 	
 	public String toString() {
-		return getName() + " Aktie mit Wert " + getPrice();
+		return getName()+ " " + getPrice();
 	}
 	
 }

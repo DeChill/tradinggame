@@ -8,11 +8,11 @@ public class ShareItem extends Asset {
 	private long buyprice;
 	
 
-	public ShareItem(String name, Share share, int ammount){
+	public ShareItem(String name, Share share, int amount){
 		super(name);
 		this.share = share;
-		this.amount = ammount;
-		this.buyprice = share.getPrice();
+		this.amount = amount;
+		this.buyprice = share.getPrice()*amount;
 		
 	}
 	
@@ -32,6 +32,9 @@ public class ShareItem extends Asset {
 		this.buyprice += buyprice;
 	}
 	
+	public long getBuyprice() {
+		return buyprice;
+	}
 	public long getValue(){
 		return share.getPrice() * amount;
 	}

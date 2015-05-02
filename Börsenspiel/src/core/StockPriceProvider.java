@@ -79,7 +79,7 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 		return shareString;
 	}
 	
-	private Share [] getShares() {
+	public Share [] getShares() {
 		return shares;
 		
 	}

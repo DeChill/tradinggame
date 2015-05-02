@@ -19,8 +19,11 @@ public interface AccountManager {
 	void sellShares(String playerName, String shareName, int amount);
 	long getValue(Asset asset);
 	long getPlayerValue(String name);
+	long check(String playerName, String shareName);
+	Player getPlayer(String name);
 //	long getSharePrice(Share share);
-//	String getShares();
+	String getShares();
+	Share [] getAllShares();
 	
 	
 }

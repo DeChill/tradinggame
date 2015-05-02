@@ -99,9 +99,28 @@ public class AccountManagerImpl implements AccountManager {
 		return asset.getValue();
 	}
 
+	public long check(String playerName, String shareName) {
+		return (stockPriceProvider.getCurrentShareRate(shareName) * getPlayer(
+				playerName).getShareDespositAccount().findShareItem(shareName)
+				.getAmmount())
+				- (getPlayer(playerName).getShareDespositAccount()
+						.findShareItem(shareName).getBuyprice());
+	}
+
 	@Override
 	public long getPlayerValue(String name) {
 		return (getPlayer(name).getPlayerCash().getValue() + getPlayer(name)
 				.getPlayerShares().getValue());
 	}
+
+	@Override
+	public String getShares() {
+		return stockPriceProvider.toString();
+	}
+
+	@Override
+	public Share[] getAllShares() {
+		return stockPriceProvider.getShares();
+	}
+
 }

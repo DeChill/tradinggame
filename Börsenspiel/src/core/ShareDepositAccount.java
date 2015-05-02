@@ -20,7 +20,15 @@ public class ShareDepositAccount extends Asset {
 
 		this.shares = temp;
 	}
-
+	
+	public ShareItem findShareItem(String shareName){
+		for(int i = 0; i < shares.length; i++) {
+			if (shareName.equals(shares[i].getName())) {
+				return shares[i];
+			}
+		}
+		return null;
+	}
 	public String toString() {
 
 		String temp = shares[0].toString();
@@ -45,7 +53,7 @@ public class ShareDepositAccount extends Asset {
 			if (share.equals(shares[i].getShare())) { // test if player already
 														// has shares of that
 														// type
-				shares[i].addAmount(amount); // shares to player shareitem array
+				shares[i].addAmount(amount);// shares to player shareitem array
 				shares[i].addBuyprice(share.getPrice() * amount);
 				return;
 			}
@@ -72,6 +80,7 @@ public class ShareDepositAccount extends Asset {
 				}
 				shares[i].setAmount(shares[i] // decrease share items
 						.getAmmount() - amount);
+				shares[i].addBuyprice(share.getPrice() * amount*(-1));
 
 				successful = true;
 
@@ -81,5 +90,9 @@ public class ShareDepositAccount extends Asset {
 		if (!successful) {
 			throw new NotEnoughSharesException();
 		}
+	}
+	
+	public ShareItem [] getShareItems() {
+		return shares;
 	}
 }

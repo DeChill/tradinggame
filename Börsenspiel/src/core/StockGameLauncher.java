@@ -1,4 +1,5 @@
 package core;
+import Agent.AgentProcessor;
 import Scanner.StockGameCommandProcessor;
 import view.StockPriceViewer;
 
@@ -15,10 +16,15 @@ public class StockGameLauncher {
 		UpdateTimer updateTimer = UpdateTimer.getInstance();
 		stockPriceProvider.startUpdate();
 		stockPriceViewer.startUpdate(stockPriceProvider);
-		StockGameCommandProcessor processor = new StockGameCommandProcessor(acc);
-		processor.process();
+//		StockGameCommandProcessor processor = new StockGameCommandProcessor(acc);
+//		processor.process();
+		
+		acc.addPlayer("Fred");
+		AgentProcessor agent = new AgentProcessor("Fred", acc);
+        agent.startUpdate();
         
      
 	}
+	
 	
 }

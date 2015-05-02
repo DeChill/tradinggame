@@ -58,5 +58,8 @@ public class Player {
 		playerShares.sellShares(share, amount);
 
 	}
+	public ShareDepositAccount getShareDespositAccount() {
+		return playerShares;
+	}
 
 }
