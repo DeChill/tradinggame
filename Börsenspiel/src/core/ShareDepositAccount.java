@@ -81,6 +81,8 @@ public class ShareDepositAccount extends Asset {
 				shares[i].setAmount(shares[i] // decrease share items
 						.getAmmount() - amount);
 				shares[i].addBuyprice(share.getPrice() * amount*(-1));
+				
+				if (shares[i].getAmmount() == 0) shares[i].addBuyprice(shares[i].getBuyprice() * -1); // TODO FIX
 
 				successful = true;
 

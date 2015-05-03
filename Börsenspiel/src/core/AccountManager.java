@@ -1,5 +1,8 @@
 package core;
 
+import Exceptions.NotEnoughMoneyException;
+import Exceptions.NotEnoughSharesException;
+
 
 public interface AccountManager {
 	
@@ -15,8 +18,9 @@ public interface AccountManager {
 	 * 
 	 */
 	void addPlayer(String name);
-	void buyShares(String playerName, String shareName, int amount);
-	void sellShares(String playerName, String shareName, int amount);
+	void buyShares(String playerName, String shareName, int amount) throws NotEnoughMoneyException;
+	void sellShares(String playerName, String shareName, int amount) throws NotEnoughSharesException;
+	void startAgent(String playerName);
 	long getValue(Asset asset);
 	long getPlayerValue(String name);
 	long check(String playerName, String shareName);

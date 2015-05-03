@@ -2,6 +2,8 @@ package Agent;
 
 import java.util.TimerTask;
 
+import Exceptions.NotEnoughMoneyException;
+import Exceptions.NotEnoughSharesException;
 import core.*;
 
 public class AgentProcessor {
@@ -23,7 +25,7 @@ public class AgentProcessor {
 			public void run(){
 				sellShares();
 				buyShares();
-				System.out.println("Fred : " + accountManager.getPlayer("Fred").toString());
+				System.out.println(accountManager.getPlayer(playerName).toString());
 			}
 
 		}, 2000, 1000);
@@ -35,14 +37,39 @@ public class AgentProcessor {
 			return;
 		for( int i = 0; i < shareItems.length; i++) {
 			if ((accountManager.check(playerName, shareItems [i].getName())) > 1000 ){
-				accountManager.sellShares(playerName, shareItems [i].getName(), shareItems[i].getAmmount());
+				try {
+					accountManager.sellShares(playerName, shareItems [i].getName(), shareItems[i].getAmmount());
+				} catch (NotEnoughSharesException e) {
+					System.out.println("Not enough shares for that transaction");
+				}
 			}
 		}
 	}
 	public void buyShares() {
 		Share [] shares = accountManager.getAllShares();
 		if(c > shares.length-1) c = 0;
+		try{
 		accountManager.buyShares(player.getName(), shares [c++].getName(), 5);
+		}catch(NotEnoughMoneyException e){
+			sellAllShares();
+		}
+	}
+
+	private void sellAllShares() {
+		ShareDepositAccount sharesAcc = player.getPlayerShares();
+		ShareItem [] shareItems = sharesAcc.getShareItems();
+		if(shareItems == null)
+			return;
+		for( int i = 0; i < shareItems.length; i++) {
+			
+				try {
+					accountManager.sellShares(playerName, shareItems [i].getName(), shareItems[i].getAmmount());
+				} catch (NotEnoughSharesException e) {
+					System.out.println("Not enough shares for that transaction");
+				}
+			
+		}
+		
 	}
 
 	public String getRandomOperation() {

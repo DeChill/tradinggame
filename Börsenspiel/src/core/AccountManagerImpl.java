@@ -1,5 +1,6 @@
 package core;
 
+import Agent.AgentProcessor;
 import Exceptions.NoShareFoundException;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
@@ -66,32 +67,32 @@ public class AccountManagerImpl implements AccountManager {
 	}
 
 	@Override
-	public void buyShares(String playerName, String shareName, int amount) {
-		try {
+	public void buyShares(String playerName, String shareName, int amount) throws NotEnoughMoneyException {
+//		try {
 
 			getPlayer(playerName).buyPlayerShares(
 					stockPriceProvider.getShare(shareName), amount);
 
-		} catch (NotEnoughMoneyException e) {
-			System.out.println("Not enough money for that transaction");
-		} catch (NoShareFoundException e) {
-			System.out.println("No share with that name was found!");
-		} catch (PlayerNotFoundException e) {
-			System.out.println("Fehler bei der Eingabe!");
-		}
+//		} catch (NotEnoughMoneyException e) {
+//			System.out.println("Not enough money for that transaction");
+//		} catch (NoShareFoundException e) {
+//			System.out.println("No share with that name was found!");
+//		} catch (PlayerNotFoundException e) {
+//			System.out.println("Fehler bei der Eingabe!");
+//		}
 
 	}
 
 	@Override
-	public void sellShares(String playerName, String shareName, int amount) {
-		try {
+	public void sellShares(String playerName, String shareName, int amount) throws NotEnoughSharesException {
+//		try {
 			getPlayer(playerName).sellPlayerShares(
 					stockPriceProvider.getShare(shareName), amount);
-		} catch (NotEnoughSharesException e) {
-			System.out.println("Not enough shares for that transaction");
-		} catch (NoShareFoundException e) {
-			System.out.println("No share with that name was found!");
-		}
+//		} catch (NotEnoughSharesException e) {
+//			System.out.println("Not enough shares for that transaction");
+//		} catch (NoShareFoundException e) {
+//			System.out.println("No share with that name was found!");
+//		}
 	}
 
 	@Override
@@ -121,6 +122,13 @@ public class AccountManagerImpl implements AccountManager {
 	@Override
 	public Share[] getAllShares() {
 		return stockPriceProvider.getShares();
+	}
+
+	@Override
+	public void startAgent(String playerName) {
+		AgentProcessor agent = new AgentProcessor(playerName, this);
+        agent.startUpdate();
+		
 	}
 
 }
