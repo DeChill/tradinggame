@@ -9,18 +9,32 @@ public class CommandScanner {
 
 	private CommandDescriptor commandDescriptor;
 	private BufferedReader shellReader;
-	private StockGameCommandType[] values;
+	private CommandTypeInfo[] values;
 	private CommandTypeInfo command;
-	String[] sarr = null;
-	Object[] params = null;
+	private String[] sarr = null;
+	private Object[] params = null;
 
-	public CommandScanner(StockGameCommandType[] values,
+	public CommandScanner(CommandTypeInfo[] values,
 			BufferedReader shellReader) {
 		this.shellReader = shellReader;
 		this.values = values;
 	}
 
 	public void inputLine2CommandDescriptor(CommandDescriptor commandDescriptor) {
+		try {
+			readCommand();
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out
+					.println("Fehler bei der Eingabe: Weitere Parameter erwartet!");
+
+		} catch (NumberFormatException e) {
+			System.out
+					.println("Fehler bei der Eingabe: Bitte nur positive ganzzahlige Ziffern  eingeben!");
+
+		} catch (ParamErrorException e) {
+			System.out
+					.println("Fehler bei der eingabe. Bitte erneut versuchen!");
+		}
 		commandDescriptor.setCommandTypeInfo(command);
 		commandDescriptor.setParams(params);
 

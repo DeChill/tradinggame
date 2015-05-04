@@ -20,7 +20,7 @@ public class StockPriceViewer extends JFrame {
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
 
 	public void startUpdate(StockPriceInfo info) {
-		updateTimer.timer.scheduleAtFixedRate(new TimerTask() {
+		updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
 
 			public void run() {
 				update(info);

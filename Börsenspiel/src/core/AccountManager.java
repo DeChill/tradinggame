@@ -28,6 +28,7 @@ public interface AccountManager {
 //	long getSharePrice(Share share);
 	String getShares();
 	Share [] getAllShares();
+
 	
 	
 }

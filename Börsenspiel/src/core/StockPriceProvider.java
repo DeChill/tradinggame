@@ -7,11 +7,11 @@ import Exceptions.NoShareFoundException;
 
 public abstract class StockPriceProvider implements StockPriceInfo{
 
-	UpdateTimer updateTimer = UpdateTimer.getInstance();
+	private UpdateTimer updateTimer = UpdateTimer.getInstance();
 	
 	
 	public void startUpdate() {
-	updateTimer.timer.scheduleAtFixedRate(new TimerTask() {
+	updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
 
 			public void run() {
 				updateShareRates();

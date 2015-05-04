@@ -20,7 +20,7 @@ public class AgentProcessor {
 	}
 
 	public void startUpdate() {
-		updateTimer.timer.scheduleAtFixedRate(new TimerTask() {
+		updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
 
 			public void run(){
 				sellShares();

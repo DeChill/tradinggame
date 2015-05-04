@@ -6,7 +6,7 @@ import view.StockPriceViewer;
 
 public class UpdateTimer {
 
-		public Timer timer = new Timer();
+		private Timer timer = new Timer();
 		
 	private static UpdateTimer instance;
 
@@ -15,5 +15,9 @@ public class UpdateTimer {
 			UpdateTimer.instance = new UpdateTimer();
 		}
 		return UpdateTimer.instance;
+	}
+	
+	public Timer getTimer(){
+		return this.timer;
 	}
 }
