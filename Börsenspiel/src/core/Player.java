@@ -1,5 +1,6 @@
 package core;
 
+import view.PlayerViewer;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
 
@@ -15,6 +16,8 @@ public class Player {
 
 		playerCash = new CashAccount(name, money);
 		playerShares = new ShareDepositAccount(name);
+		PlayerViewer pv = new PlayerViewer(this);
+		pv.startUpdate();
 
 	}
 	public CashAccount getPlayerCash() {

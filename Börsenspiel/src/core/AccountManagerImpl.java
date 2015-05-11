@@ -1,18 +1,28 @@
 package core;
 
 import Agent.AgentProcessor;
+import Logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Exceptions.NoShareFoundException;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
 import Exceptions.ParamErrorException;
 import Exceptions.PlayerNameAlreadyExistsException;
 import Exceptions.PlayerNotFoundException;
-import Scanner.StockGameCommandType;
+import java.io.IOException;
+
+import java.util.logging.Level;
+
+import java.util.logging.Logger;
+
 
 public class AccountManagerImpl implements AccountManager {
 
 	private UpdateTimer timer = UpdateTimer.getInstance();
 	private StockPriceProvider stockPriceProvider;
+	private Logger logger = Logger.getLogger("test");
 
 	public AccountManagerImpl(StockPriceProvider stockPriceProvider) {
 		this.stockPriceProvider = stockPriceProvider;
@@ -74,6 +84,9 @@ public class AccountManagerImpl implements AccountManager {
 
 		getPlayer(playerName).buyPlayerShares(
 				stockPriceProvider.getShare(shareName), amount);
+	
+		
+		
 
 		// } catch (NotEnoughMoneyException e) {
 		// System.out.println("Not enough money for that transaction");
@@ -133,6 +146,10 @@ public class AccountManagerImpl implements AccountManager {
 		agent.startUpdate();
 
 	}
+	
+	 
+
+	 
 
 	
 

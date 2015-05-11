@@ -23,6 +23,6 @@ public class CashAccount extends Asset {
 	}
 	
 	public String toString(){
-		return "Kontoinhaber: " + getName() + " Kontostand: " + balance;
+		return String.valueOf(balance);
 	}
 }

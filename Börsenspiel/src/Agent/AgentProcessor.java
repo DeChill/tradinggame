@@ -25,7 +25,6 @@ public class AgentProcessor {
 			public void run(){
 				sellShares();
 				buyShares();
-				System.out.println(accountManager.getPlayer(playerName).toString());
 			}
 
 		}, 2000, 1000);

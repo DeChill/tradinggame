@@ -2,13 +2,8 @@ package view;
 
 import java.util.Locale;
 import java.util.TimerTask;
-import java.util.Timer;
-import java.util.Calendar;
-import java.util.Date;
 import java.awt.Font;
-import java.text.DateFormat;
 import java.text.NumberFormat;
-
 import javax.swing.*;
 
 import core.Share;

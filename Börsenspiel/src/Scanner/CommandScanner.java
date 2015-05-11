@@ -3,6 +3,7 @@ package Scanner;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import Exceptions.CommandException;
 import Exceptions.ParamErrorException;
 
 public class CommandScanner {
@@ -26,14 +27,17 @@ public class CommandScanner {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out
 					.println("Fehler bei der Eingabe: Weitere Parameter erwartet!");
+			throw new CommandException();
 
 		} catch (NumberFormatException e) {
-			System.out
-					.println("Fehler bei der Eingabe: Bitte nur positive ganzzahlige Ziffern  eingeben!");
+			
+			System.out.println("Fehler bei der Eingabe: Bitte nur positive ganzzahlige Ziffern  eingeben!");
+			throw new CommandException();
 
 		} catch (ParamErrorException e) {
 			System.out
 					.println("Fehler bei der eingabe. Bitte erneut versuchen!");
+			throw new CommandException();
 		}
 		commandDescriptor.setCommandTypeInfo(command);
 		commandDescriptor.setParams(params);
@@ -70,7 +74,7 @@ public class CommandScanner {
 
 			}
 		}
-		// TODO Exception
+		if (command == null) throw new ParamErrorException();
 
 	}
 
