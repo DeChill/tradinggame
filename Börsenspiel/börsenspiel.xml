@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-05-15T12:50:54</date>
+  <millis>1431687054061</millis>
+  <sequence>0</sequence>
+  <logger>core.MyInvocationHandler</logger>
+  <level>FINE</level>
+  <class>core.MyInvocationHandler</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Timo calls method addPlayer</message>
+  <param>Timo</param>
+</record>
+<record>
+  <date>2015-05-15T12:50:58</date>
+  <millis>1431687058764</millis>
+  <sequence>1</sequence>
+  <logger>core.MyInvocationHandler</logger>
+  <level>FINE</level>
+  <class>core.MyInvocationHandler</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Timo calls method buyShares</message>
+  <param>Timo</param>
+  <param>Audi</param>
+  <param>20</param>
+</record>
+<record>
+  <date>2015-05-15T12:51:10</date>
+  <millis>1431687070686</millis>
+  <sequence>2</sequence>
+  <logger>core.MyInvocationHandler</logger>
+  <level>FINE</level>
+  <class>core.MyInvocationHandler</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>TImo calls method sellShares</message>
+  <param>TImo</param>
+  <param>Audi</param>
+  <param>20</param>
+</record>
+<record>
+  <date>2015-05-15T12:51:15</date>
+  <millis>1431687075069</millis>
+  <sequence>3</sequence>
+  <logger>core.MyInvocationHandler</logger>
+  <level>FINE</level>
+  <class>core.MyInvocationHandler</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Timo calls method sellShares</message>
+  <param>Timo</param>
+  <param>Audi</param>
+  <param>20</param>
+</record>
+<record>
+  <date>2015-05-15T12:51:32</date>
+  <millis>1431687092397</millis>
+  <sequence>4</sequence>
+  <logger>core.MyInvocationHandler</logger>
+  <level>FINE</level>
+  <class>core.MyInvocationHandler</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Timo calls method buyShares</message>
+  <param>Timo</param>
+  <param>BMW</param>
+  <param>10</param>
+</record>
+</log>
