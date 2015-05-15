@@ -1,6 +1,7 @@
 package core;
 
-import java.util.TimerTask;
+
+import java.util.*;
 
 import Exceptions.NoShareFoundException;
 
@@ -8,6 +9,7 @@ import Exceptions.NoShareFoundException;
 public abstract class StockPriceProvider implements StockPriceInfo{
 
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
+	
 	
 	
 	public void startUpdate() {
@@ -27,8 +29,15 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 	Share toy = new Share ("Toyota" , 7000);
 	
 	private Share[] shares = {bmw, aud, ope, dai, toy};
+	private List<Share> shareList = Arrays.asList(shares);
 	
-	
+	public  class NameComparator implements Comparator<Share> {
+		@Override
+		public int compare(Share a, Share b) {
+			return a.getName().compareToIgnoreCase(b.getName());
+		}
+	    
+	}
 	
 	@Override
 	public boolean isShareListed(String shareName) {
@@ -47,9 +56,9 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 
 	@Override
 	public Share[] getAllSharesAsSnapShot() {
-		Share [] temp = new Share [getShares().length];
-		for(int i = 0; i < getShares().length; i++) {
-			temp[i] = new Share(getShares()[i].getName(),getShares()[i].getPrice());
+		Share [] temp = new Share [getShares().size()];
+		for(int i = 0; i < getShares().size(); i++) {
+			temp[i] = new Share(getShares().get(i).getName(),getShares().get(i).getPrice());
 		}
 		return temp; 
 	}
@@ -63,9 +72,9 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 	protected abstract void updateShareRate(Share share);
 	
 	public Share getShare(String name){
-		for( int i = 0; i < getShares().length; i++){ 
-			if( name.equals(getShares()[i].getName())){
-				return getShares()[i];
+		for( int i = 0; i < getShares().size(); i++){ 
+			if( name.equals(getShares().get(i).getName())){
+				return getShares().get(i);
 			}
 		}
 		throw new NoShareFoundException();
@@ -79,8 +88,10 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 		return shareString;
 	}
 	
-	public Share [] getShares() {
-		return shares;
+	public List<Share> getShares() {
+		
+		Collections.sort(shareList, new NameComparator());
+		return shareList;
 		
 	}
 

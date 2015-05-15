@@ -45,7 +45,7 @@ public class AgentProcessor {
 		}
 	}
 	public void buyShares() {
-		Share [] shares = accountManager.getAllShares();
+		Share [] shares = (Share[]) accountManager.getAllShares().toArray();
 		if(c > shares.length-1) c = 0;
 		try{
 		accountManager.buyShares(player.getName(), shares [c++].getName(), 5);

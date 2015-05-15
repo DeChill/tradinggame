@@ -1,9 +1,10 @@
 package core;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.logging.Logger;
 
 import Agent.AgentProcessor;
-import Logging.*;
+
 import Exceptions.NotEnoughMoneyException;
 import Scanner.StockGameCommandProcessor;
 import view.PlayerViewer;
@@ -19,7 +20,7 @@ public class StockGameLauncher {
         
 		AccountManagerImpl acc = new AccountManagerImpl(stockPriceProvider);
 		
-		SimpleLogger Logger = new SimpleLogger();
+		Logger.getLogger(StockGameLauncher.class.getName());
 		
 		InvocationHandler handler = new MyInvocationHandler(acc);
 		AccountManager proxy = (AccountManager) Proxy.newProxyInstance(
@@ -37,11 +38,6 @@ public class StockGameLauncher {
 		
 		
 		
-//		acc.addPlayer("fred");
-//		acc.buyShares("fred", "Audi", 10);
-//		acc.buyShares("fred", "BMW", 10);
-//		PlayerViewer pv = new PlayerViewer(acc.getPlayer("fred"));
-//		pv.startUpdate();
 		
         
      

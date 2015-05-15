@@ -1,7 +1,8 @@
 package core;
 
 import Agent.AgentProcessor;
-import Logging.*;
+
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,43 +12,42 @@ import Exceptions.NotEnoughSharesException;
 import Exceptions.ParamErrorException;
 import Exceptions.PlayerNameAlreadyExistsException;
 import Exceptions.PlayerNotFoundException;
+
 import java.io.IOException;
-
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
+import core.TransactionHistory.Transaction;
 
 public class AccountManagerImpl implements AccountManager {
 
 	private UpdateTimer timer = UpdateTimer.getInstance();
 	private StockPriceProvider stockPriceProvider;
 	private Logger logger = Logger.getLogger("test");
+	private Set<Player> players;
 
 	public AccountManagerImpl(StockPriceProvider stockPriceProvider) {
 		this.stockPriceProvider = stockPriceProvider;
+		players = new HashSet<Player>();
 	}
 
-	Player[] players = new Player[0];
+	
 
-	private void addPlayerToArray(Player player) {
-		Player[] temp = new Player[players.length + 1];
-		for (int i = 0; i < players.length; i++) {
-			temp[i] = players[i];
-		}
-		temp[temp.length - 1] = player;
 
-		this.players = temp;
+	private void addPlayerToList(Player player) {
+		players.add(player);
 	}
 
 	public Player getPlayer(String name) {
-		for (int i = 0; i < players.length; i++) {
-			if (name.equals(players[i].getName())) {
-				return players[i];
+
+		  for (Player n : players) {
+
+			if (n.getName().equals(name)) {
+				return n;
+
 			}
 		}
 		throw new PlayerNotFoundException();
-
 	}
 
 	private void testForPlayer(String name) {
@@ -71,7 +71,7 @@ public class AccountManagerImpl implements AccountManager {
 			}
 
 			Player player = new Player(name, 500000);
-			addPlayerToArray(player);
+			addPlayerToList(player);
 		} catch (PlayerNameAlreadyExistsException e) {
 			System.out.println("Player already exists!");
 		}
@@ -84,9 +84,6 @@ public class AccountManagerImpl implements AccountManager {
 
 		getPlayer(playerName).buyPlayerShares(
 				stockPriceProvider.getShare(shareName), amount);
-	
-		
-		
 
 		// } catch (NotEnoughMoneyException e) {
 		// System.out.println("Not enough money for that transaction");
@@ -136,7 +133,7 @@ public class AccountManagerImpl implements AccountManager {
 	}
 
 	@Override
-	public Share[] getAllShares() {
+	public List<Share> getAllShares() {
 		return stockPriceProvider.getShares();
 	}
 
@@ -146,11 +143,19 @@ public class AccountManagerImpl implements AccountManager {
 		agent.startUpdate();
 
 	}
-	
-	 
 
-	 
-
-	
+	@Override
+	public String transactionHistoryToString(String playerName, String param) {
+		List<Transaction> temp = getPlayer(playerName).getTransactionHistory().Transactions;
+		StringBuffer buffer = new StringBuffer();
+		if (param.equals("all")) {
+			return getPlayer(playerName).getTransactionHistory().toString();
+		}
+		for (Transaction n : temp)
+			if (n.getNotes().equals(param)) {
+				buffer.append(n.toString());
+			}
+		return buffer.toString();
+	}
 
 }

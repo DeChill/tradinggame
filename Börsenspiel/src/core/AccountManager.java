@@ -1,5 +1,7 @@
 package core;
 
+import java.util.List;
+
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
 
@@ -27,7 +29,9 @@ public interface AccountManager {
 	Player getPlayer(String name);
 //	long getSharePrice(Share share);
 	String getShares();
-	Share [] getAllShares();
+	List<Share> getAllShares();
+	String transactionHistoryToString(String playerName, String param);
+	
 
 	
 	

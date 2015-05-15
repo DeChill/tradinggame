@@ -1,5 +1,7 @@
 package core;
 
+import core.TransactionHistory.Transaction;
+import core.TransactionHistory.Transaction.Types;
 import view.PlayerViewer;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
@@ -10,12 +12,14 @@ public class Player {
 
 	private ShareDepositAccount playerShares;
 	private CashAccount playerCash;
+	private TransactionHistory transactionHistory;
 
 	public Player(String name, long money) {
 		this.name = name;
 
 		playerCash = new CashAccount(name, money);
 		playerShares = new ShareDepositAccount(name);
+		transactionHistory = new TransactionHistory();
 		PlayerViewer pv = new PlayerViewer(this);
 		pv.startUpdate();
 
@@ -46,10 +50,16 @@ public class Player {
 																// money is
 																// available
 			throw new NotEnoughMoneyException();
+		
+		playerCash.decMoney(share.getPrice() * amount);
 
 		playerShares.buyShares(share, amount);
+		
+		transactionHistory.Transactions.add(new Transaction(Types.BUY, (share.getPrice()*amount), amount, share.getName()));
 
-		playerCash.decMoney(share.getPrice() * amount);
+		
+		
+		
 
 	}
 
@@ -59,10 +69,17 @@ public class Player {
 		playerCash.addMoney(share.getPrice() * amount);
 
 		playerShares.sellShares(share, amount);
+		
+		transactionHistory.Transactions.add(new Transaction(Types.SELL, (share.getPrice()*amount), amount, share.getName()));
 
 	}
+	
+	
 	public ShareDepositAccount getShareDespositAccount() {
 		return playerShares;
 	}
-
+	
+	public TransactionHistory getTransactionHistory(){
+		return transactionHistory;
+	}
 }

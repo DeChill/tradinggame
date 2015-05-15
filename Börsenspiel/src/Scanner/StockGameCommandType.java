@@ -8,7 +8,8 @@ public enum StockGameCommandType implements CommandTypeInfo {
 	SELLSHARE    ("ss",  "<playername> <sharename> <amount> * sell that amount of shares", "sellShares", String.class, String.class, int.class), 
 	VALUE		 ("val", "<playername> * print the player information", "getPlayerValue", String.class),
 	CHECK    	 ("check", "<playername> <sharename> * check if selling makes profit", "check", String.class, String.class),
-	AGENT	     ("agent", "<playername> *  starts Agent", "startAgent", String.class);
+	AGENT	     ("agent", "<playername> *  starts Agent", "startAgent", String.class),
+	HISTORY		 ("history", "<playername> <param> * prints transaction history", "transactionHistoryToString", String.class, String.class);
 	
 	private StockGameCommandType(String name, String help, String methodName, Class<?>... args){
 		this.name = name;

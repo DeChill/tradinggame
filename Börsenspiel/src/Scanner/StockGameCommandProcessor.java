@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Exceptions.CommandException;
 import Exceptions.ParamErrorException;
@@ -14,9 +16,11 @@ import core.AccountManager;
 
 public class StockGameCommandProcessor {
 
+	private Logger logger = Logger.getLogger(StockGameCommandProcessor.class
+			.getName());
 	private BufferedReader shellReader = new BufferedReader(
 			new InputStreamReader(System.in));
-//	private PrintWriter shellWriter = new PrintWriter(System.out);
+	// private PrintWriter shellWriter = new PrintWriter(System.out);
 	private AccountManager accountManager;
 
 	public StockGameCommandProcessor(AccountManager accountManager) {
@@ -31,10 +35,10 @@ public class StockGameCommandProcessor {
 						// every command
 
 			CommandDescriptor commandDescriptor = new CommandDescriptor();
-			
-			try{
-			commandScanner.inputLine2CommandDescriptor(commandDescriptor);
-			}catch (CommandException e){
+
+			try {
+				commandScanner.inputLine2CommandDescriptor(commandDescriptor);
+			} catch (CommandException e) {
 				continue;
 			}
 
@@ -43,7 +47,6 @@ public class StockGameCommandProcessor {
 			StockGameCommandType commandType = (StockGameCommandType) commandDescriptor
 					.getCommandType();
 
-			
 			switch (commandType) {
 			case EXIT: {
 				System.out.println("Good Bye!");
@@ -57,41 +60,35 @@ public class StockGameCommandProcessor {
 			}
 
 			Class<?> c;
+			c = AccountManager.class;
+			Object s = null;
+			Method method = null;
 			try {
-				c = AccountManager.class;
-				Method method = c.getDeclaredMethod(
-						commandType.getMethodName(),
+				method = c.getDeclaredMethod(commandType.getMethodName(),
 						commandType.getParamTypes());
-				Object s = method.invoke(accountManager, params);
-				
-				
-				if (s != null)
-					System.out.println(s);
-			} catch (NullPointerException e) {
-				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
+				System.out.println("No such method");
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
+				System.out.println("BEEP BEEP SECURITY EXECPTION DETECTED BEEP BEEP");
 				e.printStackTrace();
-			} catch (ParamErrorException e) {
-				System.out.println("Fehler bei der Eingabe!");
-			} catch (PlayerNotFoundException e) {
-				System.out.println("Spieler nicht gefunden!");
+			}
+			try{
+			s = method.invoke(accountManager, params);
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				System.out.println("Illegal Arguments!");
-			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out
-						.println("No such method! enter -help- for more information");
-			} catch (Exception e) {
-				System.out.println("ERROR!!!");
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
 			}
+		
 
+			if (s != null)System.out.println(s);
 		}
 
 	}
@@ -99,7 +96,8 @@ public class StockGameCommandProcessor {
 	public void help() {
 
 		for (int i = 0; i < StockGameCommandType.values().length; i++) {
-					System.out.println((StockGameCommandType.values()[i].getName() + StockGameCommandType
+			System.out
+					.println((StockGameCommandType.values()[i].getName() + StockGameCommandType
 							.values()[i].getHelpText()));
 
 		}
