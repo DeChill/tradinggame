@@ -4,7 +4,6 @@ import java.lang.reflect.Proxy;
 import java.util.logging.Logger;
 
 import Agent.AgentProcessor;
-
 import Exceptions.NotEnoughMoneyException;
 import Scanner.StockGameCommandProcessor;
 import view.PlayerViewer;
@@ -13,8 +12,14 @@ import view.StockPriceViewer;
 
 public class StockGameLauncher {
 	public static void main(String[] args) throws NotEnoughMoneyException{
+		Share bmw = new Share("BMW", 11600);
+		Share aud = new Share("Audi", 7500);
+		Share ope = new Share("Opel", 3600);
+		Share dai = new Share("Daimler", 9150);
+		Share toy = new Share ("Toyota" , 7000);
+		Share[] shares = {bmw,aud,ope,dai,toy};
 		
-		StockPriceProvider stockPriceProvider = new RandomStockPriceProvider();
+		StockPriceProvider stockPriceProvider = new RandomStockPriceProvider(shares);
 		
 		StockPriceViewer stockPriceViewer = new StockPriceViewer();	
         

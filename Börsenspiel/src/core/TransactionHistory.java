@@ -1,5 +1,6 @@
 package core;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,11 +17,12 @@ public class TransactionHistory {
 	
 
 	public static class Transaction {
-		public Transaction(Types type, long value, int amount, String notes){
+		public Transaction(Types type, long value, int amount, String shareName){
 			this.type = type;
 			this.value = value;
 			this.amount = amount;
-			this.notes  = notes;
+			this.shareName  = shareName;
+			this.date = new Date();
 		}
 		public enum Types {
 			BUY, SELL
@@ -29,7 +31,8 @@ public class TransactionHistory {
 		private Types type;
 		private long value;
 		private int amount;
-		private String notes;
+		private String shareName;
+		private Date date;
 
 		public Types getType() {
 			return type;
@@ -43,13 +46,17 @@ public class TransactionHistory {
 			return amount;
 		}
 
-		public String getNotes() {
-			return notes;
+		public String getShareName() {
+			return shareName;
 		}
 		
 		@Override
 		public String toString(){
-			return type.toString() + " " + amount + " " + notes + " Value: " + value; 
+			return type.toString() + " " + amount + " " + shareName + " Value: " + value + " (" + date.toString() + ")"; 
+		}
+
+		public Date getDate() {
+			return date;
 		}
 		
 

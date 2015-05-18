@@ -39,8 +39,9 @@ public class CommandScanner {
 					.println("Fehler bei der eingabe. Bitte erneut versuchen!");
 			throw new CommandException();
 		}
-		commandDescriptor.setCommandTypeInfo(command);
+		
 		commandDescriptor.setParams(params);
+		commandDescriptor.setCommandTypeInfo(command);
 
 	}
 
@@ -55,7 +56,7 @@ public class CommandScanner {
 
 		sarr = s.split(" ");
 		for (StockGameCommandType temp : StockGameCommandType.values()) {
-			if (sarr[0].equalsIgnoreCase(temp.getName())) {
+			if (sarr[0].equalsIgnoreCase(temp.getName())){
 
 				command = temp;
 

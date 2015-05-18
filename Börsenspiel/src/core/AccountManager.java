@@ -29,7 +29,7 @@ public interface AccountManager {
 	Player getPlayer(String name);
 //	long getSharePrice(Share share);
 	String getShares();
-	List<Share> getAllShares();
+	Share[] getAllShares();
 	String transactionHistoryToString(String playerName, String param);
 	
 

@@ -50,7 +50,7 @@ public class StockPriceViewer extends JFrame {
 		buff.append("<html><table>");
 		for (int i = 0; i < shareSnapShot.length; i++) {
 			long doublePrice = shareSnapShot[i].getPrice();
-			NumberFormat n = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+			NumberFormat n = NumberFormat.getCurrencyInstance(Locale.getDefault());
 			String s = n.format(doublePrice / 100.0);
 
 			buff.append(String.format(

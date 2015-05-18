@@ -9,7 +9,7 @@ import Exceptions.NoShareFoundException;
 public abstract class StockPriceProvider implements StockPriceInfo{
 
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
-	
+	private final SortedMap<String,Share> shares;
 	
 	
 	public void startUpdate() {
@@ -22,22 +22,28 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 		}, 2000, 1000);
 	}
 	
-	Share bmw = new Share("BMW", 11600);
-	Share aud = new Share("Audi", 7500);
-	Share ope = new Share("Opel", 3600);
-	Share dai = new Share("Daimler", 9150);
-	Share toy = new Share ("Toyota" , 7000);
 	
-	private Share[] shares = {bmw, aud, ope, dai, toy};
-	private List<Share> shareList = Arrays.asList(shares);
 	
-	public  class NameComparator implements Comparator<Share> {
-		@Override
-		public int compare(Share a, Share b) {
-			return a.getName().compareToIgnoreCase(b.getName());
-		}
-	    
+	
+	
+	
+	public StockPriceProvider(Share[] shares){
+		this.shares = new TreeMap<String,Share>();
+		for (Share s: shares)addShare(s);
 	}
+	
+	private void addShare(Share s) {
+		shares.put(s.getName(), s);
+		
+	}
+
+//	public  class NameComparator implements Comparator<Share> {
+//		@Override
+//		public int compare(Share a, Share b) {
+//			return a.getName().compareToIgnoreCase(b.getName());
+//		}
+//	    
+//	}
 	
 	@Override
 	public boolean isShareListed(String shareName) {
@@ -56,15 +62,15 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 
 	@Override
 	public Share[] getAllSharesAsSnapShot() {
-		Share [] temp = new Share [getShares().size()];
-		for(int i = 0; i < getShares().size(); i++) {
-			temp[i] = new Share(getShares().get(i).getName(),getShares().get(i).getPrice());
+		Share [] temp = new Share [getShares().length];
+		for(int i = 0; i < getShares().length; i++) {
+			temp[i] = new Share(getShares()[i].getName(),getShares()[i].getPrice());
 		}
 		return temp; 
 	}
 	protected void updateShareRates(){
-		for(int i = 0; i<shares.length; i++){
-			updateShareRate(shares[i]);
+		for(Share s: shares.values()){
+			updateShareRate(s);
 		}
 	}
 	
@@ -72,11 +78,8 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 	protected abstract void updateShareRate(Share share);
 	
 	public Share getShare(String name){
-		for( int i = 0; i < getShares().size(); i++){ 
-			if( name.equals(getShares().get(i).getName())){
-				return getShares().get(i);
-			}
-		}
+		Share s = shares.get(name);
+		if(s!=null)return s;
 		throw new NoShareFoundException();
 	}
 	
@@ -88,10 +91,10 @@ public abstract class StockPriceProvider implements StockPriceInfo{
 		return shareString;
 	}
 	
-	public List<Share> getShares() {
-		
-		Collections.sort(shareList, new NameComparator());
-		return shareList;
+	public Share[] getShares() {
+		Share[] temp = new Share[shares.values().size()];
+		System.arraycopy(shares.values().toArray(), 0, temp, 0, shares.values().size());
+		return temp;
 		
 	}
 

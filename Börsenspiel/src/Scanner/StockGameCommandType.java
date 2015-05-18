@@ -11,6 +11,7 @@ public enum StockGameCommandType implements CommandTypeInfo {
 	AGENT	     ("agent", "<playername> *  starts Agent", "startAgent", String.class),
 	HISTORY		 ("history", "<playername> <param> * prints transaction history", "transactionHistoryToString", String.class, String.class);
 	
+	
 	private StockGameCommandType(String name, String help, String methodName, Class<?>... args){
 		this.name = name;
 		this.help = help;

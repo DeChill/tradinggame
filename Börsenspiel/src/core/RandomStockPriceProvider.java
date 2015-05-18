@@ -4,6 +4,10 @@ import java.util.*;
 
 public class RandomStockPriceProvider extends StockPriceProvider{
 	
+	public RandomStockPriceProvider(Share[] shares){
+		super(shares);
+	}
+	
 	private int randomSign(){
 		return ((int) (Math.round(Math.random()) * 2 -1));
 		

@@ -24,26 +24,19 @@ public class AccountManagerImpl implements AccountManager {
 	private UpdateTimer timer = UpdateTimer.getInstance();
 	private StockPriceProvider stockPriceProvider;
 	private Logger logger = Logger.getLogger("test");
-	private Set<Player> players;
+	private Map<String, Player> players;
 
 	public AccountManagerImpl(StockPriceProvider stockPriceProvider) {
 		this.stockPriceProvider = stockPriceProvider;
-		players = new HashSet<Player>();
-	}
-
-	
-
-
-	private void addPlayerToList(Player player) {
-		players.add(player);
+		players = new HashMap<String, Player>();
 	}
 
 	public Player getPlayer(String name) {
 
-		  for (Player n : players) {
+		for (String n : players.keySet()) {
 
-			if (n.getName().equals(name)) {
-				return n;
+			if (n.equals(name)) {
+				return players.get(n);
 
 			}
 		}
@@ -71,7 +64,7 @@ public class AccountManagerImpl implements AccountManager {
 			}
 
 			Player player = new Player(name, 500000);
-			addPlayerToList(player);
+			players.put(name, player);
 		} catch (PlayerNameAlreadyExistsException e) {
 			System.out.println("Player already exists!");
 		}
@@ -133,7 +126,7 @@ public class AccountManagerImpl implements AccountManager {
 	}
 
 	@Override
-	public List<Share> getAllShares() {
+	public Share[] getAllShares() {
 		return stockPriceProvider.getShares();
 	}
 
@@ -148,14 +141,46 @@ public class AccountManagerImpl implements AccountManager {
 	public String transactionHistoryToString(String playerName, String param) {
 		List<Transaction> temp = getPlayer(playerName).getTransactionHistory().Transactions;
 		StringBuffer buffer = new StringBuffer();
-		if (param.equals("all")) {
+		if (param.equals("date")) {
+			temp.sort(new DateComperator());
 			return getPlayer(playerName).getTransactionHistory().toString();
-		}
-		for (Transaction n : temp)
-			if (n.getNotes().equals(param)) {
-				buffer.append(n.toString());
+		} else if (param.equals("shares")) {
+			temp.sort(new ShareComperator());
+			buffer.append("[");
+			for (Transaction n : temp) {
+				buffer.append(n.toString() + ", ");
 			}
-		return buffer.toString();
+			buffer.append("]");
+			return buffer.toString();
+		} else {
+			temp.sort(new DateComperator());
+			buffer.append("[");
+			for (Transaction n : temp)
+				if (n.getShareName().equals(param)) {
+					buffer.append(n.toString()+ ", ");
+				}
+			buffer.append("]");
+			return buffer.toString();
+		}
+
 	}
 
+	public class ShareComperator implements Comparator<Transaction> {
+
+		@Override
+		public int compare(Transaction a, Transaction b) {
+			return a.getShareName().compareToIgnoreCase(b.getShareName());
+
+		}
+
+	}
+
+	public class DateComperator implements Comparator<Transaction> {
+
+		@Override
+		public int compare(Transaction a, Transaction b) {
+			return a.getDate().compareTo(b.getDate());
+
+		}
+	}
 }

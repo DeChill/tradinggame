@@ -18,6 +18,7 @@ public class CommandDescriptor {
 	}
 	
 	public void setCommandTypeInfo (CommandTypeInfo commandType) {
+
 		this.commandType = commandType;
 	}
 
