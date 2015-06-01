@@ -1,0 +1,13 @@
+# Level for root logger
+.level= INFO
+ 
+
+
+ 
+handlers= java.util.logging.FileHandler, java.util.logging.ConsoleHandler
+ 
+# file output is in user's home directory.
+java.util.logging.FileHandler.pattern = börsenspiel.xml
+
+# write records in XML format
+java.util.logging.FileHandler.formatter = java.util.logging.XMLFormatter
