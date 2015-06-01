@@ -8,10 +8,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class BetterHistoricalStockPriceProvider extends StockPriceProvider {
-	Deque<String> audiShareRates;
-	Deque<String> bmwShareRates;
-	Deque<String> toyotaShareRates;
-	Deque<String> daimlerShareRates;
+	private Deque<String> audiShareRates;
+	private Deque<String> bmwShareRates;
+	private Deque<String> toyotaShareRates;
+	private Deque<String> daimlerShareRates;
 
 	BetterHistoricalStockPriceProvider(Share[] shares) {
 		super(shares);
@@ -23,21 +23,21 @@ public class BetterHistoricalStockPriceProvider extends StockPriceProvider {
 		BufferedReader audiReader;
 		try {
 			audiReader = new BufferedReader(new FileReader(
-					"/Users/Timo/git/Prog2/tradinggame/shareprices/audi.csv"));
+					"shareprices/audi.csv"));
 			while (audiReader.ready()) {
 				String line = audiReader.readLine();
 				if (line != null && !line.contains("Date"))
 					audiShareRates.push(line);
 			}
 			BufferedReader bmwReader = new BufferedReader(new FileReader(
-					"/Users/Timo/git/Prog2/tradinggame/shareprices/bmw.csv"));
+					"shareprices/bmw.csv"));
 			while (bmwReader.ready()) {
 				String line = bmwReader.readLine();
 				if (line != null && !line.contains("Date"))
 					bmwShareRates.push(line);
 			}
 			BufferedReader toyotaReader = new BufferedReader(new FileReader(
-					"/Users/Timo/git/Prog2/tradinggame/shareprices/toyota.csv"));
+					"shareprices/toyota.csv"));
 			while (toyotaReader.ready()) {
 				String line = toyotaReader.readLine();
 				if (line != null && !line.contains("Date"))
@@ -45,7 +45,7 @@ public class BetterHistoricalStockPriceProvider extends StockPriceProvider {
 			}
 			BufferedReader daimlerReader = new BufferedReader(
 					new FileReader(
-							"/Users/Timo/git/Prog2/tradinggame/shareprices/daimler.csv"));
+							"shareprices/daimler.csv"));
 			while (daimlerReader.ready()) {
 				String line = daimlerReader.readLine();
 				if (line != null && !line.contains("Date"))
@@ -77,7 +77,10 @@ public class BetterHistoricalStockPriceProvider extends StockPriceProvider {
 			deque = toyotaShareRates;
 			break;
 		}
-		String line = deque.pop();
+		String line = "";
+		if (deque.peek()!= null){
+			line = deque.pop();
+		}
 		String[] shareArr = line.split(",");
 		share.setPrice((long) (Float.parseFloat(shareArr[4]) * 100));
 

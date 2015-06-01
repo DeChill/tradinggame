@@ -45,7 +45,7 @@ public class StockPriceViewer extends JFrame {
 	}
 
 	public void update(StockPriceInfo info) {
-		Share[] shareSnapShot = info.getAllSharesAsSnapShot();
+		Share[] shareSnapShot = info.getAllSharesAsSnapShot(); // TODO Lambda
 
 		StringBuilder buff = new StringBuilder();
 		buff.append("<html><table>");
