@@ -18,7 +18,7 @@ public class StockGameLauncher {
 		Share toy = new Share ("Toyota" , 7000);
 		Share[] shares = {bmw,aud,dai,toy};
 		
-		StockPriceProvider stockPriceProvider = new HistoricalStockPriceProvider(shares);
+		StockPriceProvider stockPriceProvider = new BetterHistoricalStockPriceProvider(shares);
 		
 		StockPriceViewer stockPriceViewer = new StockPriceViewer();	
         

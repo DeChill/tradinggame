@@ -18,7 +18,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>de.hsaugsburg.StockGameLauncher</mainClass>
+							<mainClass>de.hsaugsburg.core.StockGameLauncher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

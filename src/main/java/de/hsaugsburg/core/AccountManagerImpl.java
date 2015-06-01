@@ -16,7 +16,7 @@ import de.hsaugsburg.exception.ParamErrorException;
 import de.hsaugsburg.exception.PlayerNameAlreadyExistsException;
 import de.hsaugsburg.exception.PlayerNotFoundException;
 
-public class AccountManagerImpl implements AccountManager{
+public class AccountManagerImpl implements AccountManager {
 
 	private UpdateTimer timer = UpdateTimer.getInstance();
 	private StockPriceProvider stockPriceProvider;
@@ -29,7 +29,7 @@ public class AccountManagerImpl implements AccountManager{
 	}
 
 	public Player getPlayer(String name) {
-//		players.get(arg0)
+		// players.get(arg0)
 		for (String n : players.keySet()) {
 
 			if (n.equals(name)) {
@@ -135,32 +135,42 @@ public class AccountManagerImpl implements AccountManager{
 	}
 
 	@Override
-	public String transactionHistoryToString(String playerName, String param) {
-		List<Transaction> temp = getPlayer(playerName).getTransactionHistory().Transactions;
-		StringBuffer buffer = new StringBuffer();
-		if (param.equals("date")) {
-			temp.sort(new DateComperator());
-			return getPlayer(playerName).getTransactionHistory().toString();
-		} else if (param.equals("shares")) {
-			temp.sort(new ShareComperator());
-			buffer.append("[");
-			for (Transaction n : temp) {
-				buffer.append(n.toString() + ", ");
-			}
-			buffer.append("]");
-			return buffer.toString();
-		} else {
-			temp.sort(new DateComperator());
-			buffer.append("[");
-			for (Transaction n : temp)
-				if (n.getShareName().equals(param)) {
-					buffer.append(n.toString()+ ", ");
+	public String transactionHistoryToString(String playerName, String param,
+			String mimetype) {
+		if (mimetype.equals("txt")) {
+			List<Transaction> temp = getPlayer(playerName)
+					.getTransactionHistory().Transactions;
+			StringBuffer buffer = new StringBuffer();
+			if (param.equals("date")) {
+				temp.sort(new DateComperator());
+				return getPlayer(playerName).getTransactionHistory().toString();
+			} else if (param.equals("shares")) {
+				temp.sort(new ShareComperator());
+				buffer.append("[");
+				for (Transaction n : temp) {
+					buffer.append(n.toString() + ", ");
 				}
-			buffer.append("]");
-			return buffer.toString();
-		}
+				buffer.append("]");
+				return buffer.toString();
+			} else {
+				temp.sort(new DateComperator());
+				buffer.append("[");
+				for (Transaction n : temp)
+					if (n.getShareName().equals(param)) {
+						buffer.append(n.toString() + ", ");
+					}
+				buffer.append("]");
+				return buffer.toString();
+			}
 
+		}else if(mimetype.equals("html")){
+			getPlayer(playerName).getTransactionHistory().toFile();
+			return "File created";
+		}else{
+			return "Fehler bei der Eingabe! Bitte MimeType angeben";
+		}
 	}
+	
 
 	public class ShareComperator implements Comparator<Transaction> {
 

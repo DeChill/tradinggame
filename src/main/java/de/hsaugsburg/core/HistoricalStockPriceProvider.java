@@ -14,14 +14,14 @@ public class HistoricalStockPriceProvider extends StockPriceProvider {
 		super(shares);
 		try {
 			audiReader = new BufferedReader(new FileReader(
-					"/Users/Timo/workspace/tradinggame/shareprices/audi.csv"));
+					"/Users/Timo/git/Prog2/tradinggame/shareprices/audi.csv"));
 			bmwReader = new BufferedReader(new FileReader(
-					"/Users/Timo/workspace/tradinggame/shareprices/bmw.csv"));
+					"/Users/Timo/git/Prog2/tradinggame/shareprices/bmw.csv"));
 			toyotaReader = new BufferedReader(new FileReader(
-					"/Users/Timo/workspace/tradinggame/shareprices/toyota.csv"));
+					"/Users/Timo/git/Prog2/tradinggame/shareprices/toyota.csv"));
 			daimlerReader = new BufferedReader(
 					new FileReader(
-							"/Users/Timo/workspace/tradinggame/shareprices/daimler.csv"));
+							"/Users/Timo/git/Prog2/tradinggame/shareprices/daimler.csv"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
