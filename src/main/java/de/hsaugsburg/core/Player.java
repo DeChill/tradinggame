@@ -1,5 +1,8 @@
 package de.hsaugsburg.core;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import de.hsaugsburg.core.TransactionHistory.Transaction;
 import de.hsaugsburg.core.TransactionHistory.Transaction.Types;
 import de.hsaugsburg.exception.NotEnoughMoneyException;
@@ -13,25 +16,31 @@ public class Player {
 	private ShareDepositAccount playerShares;
 	private CashAccount playerCash;
 	private TransactionHistory transactionHistory;
+	private ResourceBundle language;
 
 	public Player(String name, long money) {
 		this.name = name;
 
 		playerCash = new CashAccount(name, money);
 		playerShares = new ShareDepositAccount(name);
-		transactionHistory = new TransactionHistory();
+
+		this.language = (ResourceBundle.getBundle("l10n.LanguageBundle",
+				getLocale()));
+
+		transactionHistory = new TransactionHistory(this);
 		PlayerViewer pv = new PlayerViewer(this);
 		pv.startUpdate();
 
 	}
+
 	public CashAccount getPlayerCash() {
 		return playerCash;
 	}
-	
+
 	public ShareDepositAccount getPlayerShares() {
 		return playerShares;
 	}
-	
+
 	public String getName() {
 
 		return name;
@@ -50,16 +59,13 @@ public class Player {
 																// money is
 																// available
 			throw new NotEnoughMoneyException();
-		
+
 		playerCash.decMoney(share.getPrice() * amount);
 
 		playerShares.buyShares(share, amount);
-		
-		transactionHistory.Transactions.add(new Transaction(Types.BUY, (share.getPrice()*amount), amount, share.getName()));
 
-		
-		
-		
+		transactionHistory.Transactions.add(new Transaction(Types.BUY, (share
+				.getPrice() * amount), amount, share.getName()));
 
 	}
 
@@ -69,17 +75,26 @@ public class Player {
 		playerCash.addMoney(share.getPrice() * amount);
 
 		playerShares.sellShares(share, amount);
-		
-		transactionHistory.Transactions.add(new Transaction(Types.SELL, (share.getPrice()*amount), amount, share.getName()));
+
+		transactionHistory.Transactions.add(new Transaction(Types.SELL, (share
+				.getPrice() * amount), amount, share.getName()));
 
 	}
-	
-	
+
 	public ShareDepositAccount getShareDespositAccount() {
 		return playerShares;
 	}
-	
-	public TransactionHistory getTransactionHistory(){
+
+	public TransactionHistory getTransactionHistory() {
 		return transactionHistory;
+	}
+
+	public Locale getLocale() {
+
+		return (new Locale("de", "de"));
+	}
+
+	public ResourceBundle getLanguage() {
+		return language;
 	}
 }

@@ -1,6 +1,7 @@
 package de.hsaugsburg.view;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.awt.Font;
 import java.text.NumberFormat;
@@ -15,9 +16,11 @@ public class PlayerViewer extends JFrame {
 	private Player player;
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
 	private JLabel Label;
+	private ResourceBundle language;
 	
 	public PlayerViewer(Player player){
 		this.player = player;
+		this.language = player.getLanguage();
 		
 		Label = new JLabel("Loading...", JLabel.CENTER);
 		Label.setFont(new Font("Arial", Font.BOLD, 20));
@@ -52,10 +55,12 @@ public class PlayerViewer extends JFrame {
 	
 		}
 		buff.append("<br>");
-		buff.append("Kontostand: " + player.getPlayerCash().toString());
+		String balance = language.getString("balance");
+		buff.append(balance + player.getPlayerCash().toString());
 		buff.append("<br>");
 		buff.append("<br>");
-		buff.append("Gesammtwert: " + (player.getPlayerCash().getValue() + player.getPlayerShares().getValue()));
+		String total = language.getString("total");
+		buff.append(total + (player.getPlayerCash().getValue() + player.getPlayerShares().getValue()));
 		buff.append("<br>");
 		buff.append("</html>");
 

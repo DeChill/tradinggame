@@ -14,6 +14,7 @@ import de.hsaugsburg.core.UpdateTimer;
 public class StockPriceViewer extends JFrame {
 
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
+	private Locale currentLocale;
 
 	public void startUpdate(final StockPriceInfo info) {
 		updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
@@ -41,6 +42,8 @@ public class StockPriceViewer extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(500, 300);
 		setVisible(true);
+		
+		this.currentLocale = new Locale("en", "us");
 
 	}
 
@@ -51,7 +54,7 @@ public class StockPriceViewer extends JFrame {
 		buff.append("<html><table>");
 		for (int i = 0; i < shareSnapShot.length; i++) {
 			long doublePrice = shareSnapShot[i].getPrice();
-			NumberFormat n = NumberFormat.getCurrencyInstance(Locale.getDefault());
+			NumberFormat n = NumberFormat.getCurrencyInstance(currentLocale);
 			String s = n.format(doublePrice / 100.0);
 
 			buff.append(String.format(

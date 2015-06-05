@@ -1,5 +1,7 @@
 package de.hsaugsburg.core;
 import java.io.FileNotFoundException;
+
+import javafx.application.Application;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +12,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import de.hsaugsburg.GUI.GUI;
 import de.hsaugsburg.agent.AgentProcessor;
 import de.hsaugsburg.exception.NotEnoughMoneyException;
 import de.hsaugsburg.scanner.StockGameCommandProcessor;
@@ -62,10 +65,9 @@ public class StockGameLauncher {
 		stockPriceProvider.startUpdate();
 		stockPriceViewer.startUpdate(stockPriceProvider);
 		
-//		 Locale currentLocale = new Locale("de","de");
-//
-//       ResourceBundle language = 
-//           ResourceBundle.getBundle("LanguageBundle",currentLocale);
+		GUI gui = new GUI();
+		gui.launch();
+		
 		
 		StockGameCommandProcessor processor = new StockGameCommandProcessor(proxy);
 		processor.process();

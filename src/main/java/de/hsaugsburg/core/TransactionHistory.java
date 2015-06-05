@@ -7,12 +7,27 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class TransactionHistory {
+	
+	private Player player;
+	private static ResourceBundle language;
+	static DateFormat formatter;
+
+	public TransactionHistory(Player player){
+		this.player = player;
+		this.language =player.getLanguage();
+		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT).getDateInstance(0, player.getLocale());
+	}
 
 	public List<Transaction> Transactions = new LinkedList<Transaction>();
 	
@@ -28,16 +43,18 @@ public class TransactionHistory {
 		buffer.append("<table " + tableprop + ">");
 		
 		buffer.append("<tr>");
-		buffer.append("<td> Datum </td>");
-		buffer.append("<td> Share Name </td>");
-		buffer.append("<td> Amount </td>");
-		buffer.append("<td> Value </td>");
+		buffer.append("<td> "+language.getString("date")+ "</td>");
+		buffer.append("<td> "+language.getString("transaction")+ "</td>");
+		buffer.append("<td>"+language.getString("shareName")+"</td>");
+		buffer.append("<td>"+language.getString("amount")+"</td>");
+		buffer.append("<td>" +language.getString("value") +"</td>");
 		buffer.append("</tr>");
 		
 		while(transactionIterator.hasNext()){
 			Transaction transaction = transactionIterator.next();
 			buffer.append("<tr>");
-			buffer.append("<td>" + transaction.getDate() + "</td>");
+			buffer.append("<td>" + formatter.format( transaction.getDate()) + "</td>");
+			buffer.append("<td>" + language.getString(transaction.getType().toString().toLowerCase()) + "</td>");
 			buffer.append("<td>" + transaction.getShareName() + "</td>");
 			buffer.append("<td>" + transaction.getAmount() + "</td>");
 			buffer.append("<td>" + transaction.getValue() + "</td>");
@@ -107,7 +124,7 @@ public class TransactionHistory {
 		
 		@Override
 		public String toString(){
-			return type.toString() + " " + amount + " " + shareName + " Value: " + value + " (" + date.toString() + ")"; 
+			return language.getString(getType().toString().toLowerCase()) + " " + amount + " " + shareName + " " + language.getString("value") + value + " (" + formatter.format(getDate()) + ")"; 
 		}
 
 		public Date getDate() {

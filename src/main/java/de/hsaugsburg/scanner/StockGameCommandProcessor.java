@@ -49,7 +49,7 @@ public class StockGameCommandProcessor {
 
 			switch (commandType) {
 			case EXIT: {
-				System.out.println("Good Bye!");
+				System.out.println("Bye!");
 				exit();
 				continue;
 			}
