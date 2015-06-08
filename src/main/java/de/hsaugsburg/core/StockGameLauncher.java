@@ -28,7 +28,11 @@ public class StockGameLauncher {
 		Share toy = new Share ("Toyota" , 7000);
 		Share[] shares = {bmw,aud,dai,toy};
 		
-
+		Properties sysProps = System.getProperties();
+		sysProps.setProperty("locale", "de");
+//		sysProps.setProperty("locale", "en");
+		
+		
 		Properties prop = new Properties();
  
 		FileReader reader = null;
@@ -65,9 +69,9 @@ public class StockGameLauncher {
 		stockPriceProvider.startUpdate();
 		stockPriceViewer.startUpdate(stockPriceProvider);
 		
-		GUI gui = new GUI();
-		gui.launch();
-		
+//		GUI gui = new GUI();
+//		gui.launch();
+//		
 		
 		StockGameCommandProcessor processor = new StockGameCommandProcessor(proxy);
 		processor.process();

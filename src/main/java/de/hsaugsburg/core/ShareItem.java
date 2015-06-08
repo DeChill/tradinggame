@@ -1,11 +1,17 @@
 package de.hsaugsburg.core;
 
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 
 public class ShareItem extends Asset {
 	
 	private Share share;
 	private int amount;
 	private long buyprice;
+	ResourceBundle language;
+	
 	
 
 	public ShareItem(String name, Share share, int amount){
@@ -13,6 +19,9 @@ public class ShareItem extends Asset {
 		this.share = share;
 		this.amount = amount;
 		this.buyprice = share.getPrice()*amount;
+		Properties sysProps = System.getProperties();
+		this.language = (ResourceBundle.getBundle("l10n.LanguageBundle",
+				new Locale(sysProps.getProperty("locale"))));
 		
 	}
 	
@@ -40,7 +49,7 @@ public class ShareItem extends Asset {
 	}
 	
 	public String toString(){
-		return amount + " Aktien von " + getName() + " zu je " + share.getPrice() + ". Wert: " + getValue();
+		return amount + " " + language.getString("sharesof") + " " + getName() + " " + language.getString("each") + " " + share.getPrice() + ". " + language.getString("value")+ " " + getValue();
 	}
 	
 	public Share getShare(){

@@ -1,6 +1,8 @@
 package de.hsaugsburg.core;
 
+import java.io.InputStream;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import de.hsaugsburg.core.TransactionHistory.Transaction;
@@ -91,7 +93,9 @@ public class Player {
 
 	public Locale getLocale() {
 
-		return (new Locale("de", "de"));
+
+		 Properties sysProps = System.getProperties();
+		return new Locale(sysProps.getProperty("locale"));
 	}
 
 	public ResourceBundle getLanguage() {
