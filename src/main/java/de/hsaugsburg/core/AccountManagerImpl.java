@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.hsaugsburg.GUI.PlayerGUI;
 import de.hsaugsburg.agent.AgentProcessor;
 import de.hsaugsburg.core.TransactionHistory.Transaction;
 import de.hsaugsburg.exception.NoShareFoundException;
@@ -62,6 +63,7 @@ public class AccountManagerImpl implements AccountManager {
 
 			Player player = new Player(name, 500000);
 			players.put(name, player);
+			PlayerGUI a = new PlayerGUI(player,this);
 		} catch (PlayerNameAlreadyExistsException e) {
 			System.out.println("Player already exists!");
 		}

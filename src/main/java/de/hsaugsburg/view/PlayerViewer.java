@@ -3,68 +3,79 @@ package de.hsaugsburg.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
-import java.awt.Font;
+
 import java.text.NumberFormat;
 
-import javax.swing.*;
-
+import javafx.*;
+import javafx.application.Platform;
 import de.hsaugsburg.core.Player;
 import de.hsaugsburg.core.UpdateTimer;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
 
-public class PlayerViewer extends JFrame {
+public class PlayerViewer {
 	
 	private Player player;
 	private UpdateTimer updateTimer = UpdateTimer.getInstance();
-	private JLabel Label;
+	private Label label;
 	private ResourceBundle language;
 	
 	public PlayerViewer(Player player){
 		this.player = player;
 		this.language = player.getLanguage();
 		
-		Label = new JLabel("Loading...", JLabel.CENTER);
-		Label.setFont(new Font("Arial", Font.BOLD, 20));
-		add(Label);
-		Label.setVerticalAlignment(JLabel.TOP);
-		Label.setHorizontalTextPosition(JLabel.RIGHT);
+		label = new Label("Loading...");
+		
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(500, 300);
-		setVisible(true);
+
+
 	}
 	
 	
 
-	public void startUpdate() {
-		updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
-
-			public void run() {
-				update();
-			}
-
-		}, 2000, 1000);
-	}
+	
 	
 	public void update() {
 
 		StringBuilder buff = new StringBuilder();
-		buff.append("<html>");
+		
 		for (int i = 0; i < player.getShareDespositAccount().getShareItems().length; i++) {
 		buff.append(player.getShareDespositAccount().getShareItems()[i].toString());
-		buff.append("<br>");
+		buff.append("\r\n");
 	
 		}
-		buff.append("<br>");
+		buff.append("\r\n");
 		String balance = language.getString("balance");
 		buff.append(balance + player.getPlayerCash().toString());
-		buff.append("<br>");
-		buff.append("<br>");
+		buff.append("\r\n");
+		buff.append("\r\n");
 		String total = language.getString("total");
 		buff.append(total + (player.getPlayerCash().getValue() + player.getPlayerShares().getValue()));
-		buff.append("<br>");
-		buff.append("</html>");
+		buff.append("\r\n");
+		
 
-		Label.setText(buff.toString());
+		label.setText(buff.toString());
+		
 	}
+	
+//	public void StartUpdate(){
+//		Platform.runLater(() -> {
+//	
+//	        updateTimer.getTimer().scheduleAtFixedRate(new TimerTask() {
+//
+//	            @Override
+//	            public void run() {
+//	                update();
+//
+//	            }
+//	        }, 1000, 1000);
+//	    });
+//	}
+	
+	public Label getLabel(){
+		return label;
+	}
+	
+	
 
 }

@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import de.hsaugsburg.GUI.PlayerGUI;
 import de.hsaugsburg.core.TransactionHistory.Transaction;
 import de.hsaugsburg.core.TransactionHistory.Transaction.Types;
 import de.hsaugsburg.exception.NotEnoughMoneyException;
@@ -30,8 +31,9 @@ public class Player {
 				getLocale()));
 
 		transactionHistory = new TransactionHistory(this);
-		PlayerViewer pv = new PlayerViewer(this);
-		pv.startUpdate();
+		
+		
+		
 
 	}
 

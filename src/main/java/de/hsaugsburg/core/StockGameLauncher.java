@@ -93,11 +93,11 @@ public class StockGameLauncher {
 		
 		
 		
-//		GUI.setUp(processor, proxy);
+		GUI.setUp(processor, proxy);
 		
-		processor.process("crp timo");
-		Player p = acc.getPlayer("timo");
-		PlayerGUI.setUp(p,acc);
+//		processor.process("crp timo");
+//		Player p = acc.getPlayer("timo");
+//		PlayerGUI.setUp(p,acc);
 
 		
 		
