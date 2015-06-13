@@ -1,5 +1,8 @@
 package de.hsaugsburg.view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimerTask;
 import java.awt.Font;
@@ -48,19 +51,21 @@ public class StockPriceViewer extends JFrame {
 	}
 
 	public void update(StockPriceInfo info) {
-		Share[] shareSnapShot = info.getAllSharesAsSnapShot(); // TODO Lambda
+		
+		List<Share> shareList = Arrays.asList(info.getAllSharesAsSnapShot());
 
 		StringBuilder buff = new StringBuilder();
 		buff.append("<html><table>");
-		for (int i = 0; i < shareSnapShot.length; i++) {
-			long doublePrice = shareSnapShot[i].getPrice();
-			NumberFormat n = NumberFormat.getCurrencyInstance(currentLocale);
-			String s = n.format(doublePrice / 100.0);
+		
+		
+		NumberFormat n = NumberFormat.getCurrencyInstance(currentLocale);
+		
+		
+		shareList.forEach(share ->  buff.append(String.format(
+				"<tr><td align='right'>%s</td><td></td><td>%s</td></tr>",
+				share.getName(), n.format(share.getPrice() / 100.0))));
+		
 
-			buff.append(String.format(
-					"<tr><td align='right'>%s</td><td></td><td>%s</td></tr>",
-					shareSnapShot[i].getName(), s));
-		}
 
 		buff.append("</table></html>");
 

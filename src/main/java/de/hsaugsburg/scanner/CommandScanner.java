@@ -21,9 +21,9 @@ public class CommandScanner {
 		this.values = values;
 	}
 
-	public void inputLine2CommandDescriptor(CommandDescriptor commandDescriptor) {
+	public void inputLine2CommandDescriptor(CommandDescriptor commandDescriptor, String s) {
 		try {
-			readCommand();
+			readCommand(s);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out
 					.println("Fehler bei der Eingabe: Weitere Parameter erwartet!");
@@ -45,14 +45,14 @@ public class CommandScanner {
 
 	}
 
-	public void readCommand() throws ArrayIndexOutOfBoundsException {
-		String s = "";
-		try {
-			s = shellReader.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void readCommand(String s) throws ArrayIndexOutOfBoundsException {
+//		String s = "";
+//		try {
+//			s = shellReader.readLine();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		sarr = s.split(" ");
 		for (StockGameCommandType temp : StockGameCommandType.values()) {

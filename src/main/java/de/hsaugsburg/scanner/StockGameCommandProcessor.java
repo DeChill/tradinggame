@@ -27,19 +27,19 @@ public class StockGameCommandProcessor {
 		this.accountManager = accountManager;
 	}
 
-	public void process() {
+	public String process(String string) {
 		CommandScanner commandScanner = new CommandScanner(
 				StockGameCommandType.values(), shellReader);
 
-		while (true) { // the loop over all commands with one input line for
-						// every command
+//		while (true) { // the loop over all commands with one input line for
+//						// every command
 
 			CommandDescriptor commandDescriptor = new CommandDescriptor();
 
 			try {
-				commandScanner.inputLine2CommandDescriptor(commandDescriptor);
+				commandScanner.inputLine2CommandDescriptor(commandDescriptor, string);
 			} catch (CommandException e) {
-				continue;
+//				continue;
 			}
 
 			Object[] params = commandDescriptor.getParams();
@@ -49,14 +49,18 @@ public class StockGameCommandProcessor {
 
 			switch (commandType) {
 			case EXIT: {
-				System.out.println("Bye!");
+//				return "bye";
 				exit();
-				continue;
+				break;
+//				continue;
 			}
 			case HELP: {
-				help();
-				continue;
+				return help();
+//				break;
+//				continue;
 			}
+			default:
+				break;
 			}
 
 			Class<?> c;
@@ -88,19 +92,20 @@ public class StockGameCommandProcessor {
 			}
 		
 
-			if (s != null)System.out.println(s);
+			if (s != null)return (String)s;
+			return "";
 		}
 
-	}
+//	}
 
-	public void help() {
-
+	public String help() {
+			StringBuffer s = new StringBuffer();
 		for (int i = 0; i < StockGameCommandType.values().length; i++) {
-			System.out
-					.println((StockGameCommandType.values()[i].getName() + StockGameCommandType
-							.values()[i].getHelpText()));
+			s.append((StockGameCommandType.values()[i].getName() + StockGameCommandType
+							.values()[i].getHelpText()) + "\n\r");
 
 		}
+		return s.toString();
 
 	}
 

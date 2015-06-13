@@ -1,3 +1,5 @@
+
+
 package de.hsaugsburg.core;
 
 import java.io.BufferedWriter;

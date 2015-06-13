@@ -2,6 +2,7 @@ package de.hsaugsburg.core;
 import java.io.FileNotFoundException;
 
 import javafx.application.Application;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import de.hsaugsburg.GUI.GUI;
+import de.hsaugsburg.GUI.PlayerGUI;
 import de.hsaugsburg.agent.AgentProcessor;
 import de.hsaugsburg.exception.NotEnoughMoneyException;
 import de.hsaugsburg.scanner.StockGameCommandProcessor;
@@ -29,8 +31,8 @@ public class StockGameLauncher {
 		Share[] shares = {bmw,aud,dai,toy};
 		
 		Properties sysProps = System.getProperties();
-		sysProps.setProperty("locale", "de");
-//		sysProps.setProperty("locale", "en");
+//		sysProps.setProperty("locale", "de");
+		sysProps.setProperty("locale", "en");
 		
 		
 		Properties prop = new Properties();
@@ -69,13 +71,34 @@ public class StockGameLauncher {
 		stockPriceProvider.startUpdate();
 		stockPriceViewer.startUpdate(stockPriceProvider);
 		
-//		GUI gui = new GUI();
-//		gui.launch();
+		
 //		
 		
 		StockGameCommandProcessor processor = new StockGameCommandProcessor(proxy);
-		processor.process();
 		
+//		processor.process("crp timo");
+//		processor.process("bs timo Audi 2");
+		
+//		GUI gui = new GUI();
+		
+//		(new Thread() {
+//		      @Override 
+//		      public void run() {
+//		         System.out.println("hallo"); // dummy for start command processor
+//		      };
+//		   }).start();
+//		   
+//		   Application.launch(args);
+//		}
+		
+		
+		
+//		GUI.setUp(processor, proxy);
+		
+		processor.process("crp timo");
+		Player p = acc.getPlayer("timo");
+		PlayerGUI.setUp(p,acc);
+
 		
 		
 		
